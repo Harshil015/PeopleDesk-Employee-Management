@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS Employees (
     Gender         TEXT,
     Salary         REAL
                    CHECK (Salary IS NULL OR Salary >= 0),
-
     IsDeleted      INTEGER NOT NULL DEFAULT 0
                    CHECK (IsDeleted IN (0, 1)),
     CreatedDate    TEXT NOT NULL DEFAULT (datetime('now')),
