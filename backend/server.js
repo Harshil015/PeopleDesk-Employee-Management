@@ -1,11 +1,3 @@
-// server.js
-//
-// The application's entry point. This is where the "middleware
-// pipeline" is assembled - the ordered list of things that happen
-// to every incoming request before it reaches a controller.
-//
-// .NET equivalent: this file is the rough equivalent of Program.cs.
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -20,9 +12,17 @@ require("./db/connection");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// --- Global middleware (runs on EVERY request, in this order) ---
-app.use(cors());           // allow the frontend (served from a different port) to call this API
-app.use(express.json());   // parse incoming JSON request bodies into req.body
+const frontendOrigin =
+  process.env.FRONTEND_ORIGIN ||
+  "http://localhost:8080";
+
+app.use(cors({
+  origin: frontendOrigin,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+app.use(express.json());
 
 // --- Simple health check, useful for confirming the server is alive ---
 app.get("/api/health", (req, res) => {
