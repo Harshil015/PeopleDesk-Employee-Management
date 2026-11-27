@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Employees - Employee Management System</title>
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <div class="title">Employee Management <span>/ Employees</span></div>
+  <div class="who">
+    <span id="whoami"></span>
+    <button class="btn btn-secondary btn-small" id="logoutBtn">Log out</button>
+  </div>
+</header>
+
+<main class="app-main">
+  <div class="toolbar">
+    <h2>Employees</h2>
+    <div style="display:flex; gap:10px;">
+      <input type="search" id="searchInput" placeholder="Search by name or department" />
+      <button class="btn btn-primary" id="addBtn">+ Add employee</button>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Joining date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="employeeTableBody">
+        <!-- rows injected by dashboard.js -->
+      </tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      No employees yet. Click "+ Add employee" to create the first one.
+    </div>
+  </div>
+</main>
+
+<!-- View modal (Task 4: read-only employee details, separate from Edit) -->
+<div class="modal-overlay" id="viewOverlay">
+  <div class="modal" style="max-width:460px;">
+    <h3>Employee details</h3>
+    <div id="viewBody"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" id="closeViewBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add / Edit modal (same form used for both Create and Update) -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">Add employee</h3>
+    <div class="error-text" id="formError"></div>
+    <form id="employeeForm" novalidate>
+      <input type="hidden" id="employeeId" />
+      <div class="form-grid">
+        <div class="field full">
+          <label for="employeeName">Employee name *</label>
+          <input type="text" id="employeeName" required />
+        </div>
+        <div class="field">
+          <label for="email">Email *</label>
+          <input type="email" id="email" required />
+        </div>
+        <div class="field">
+          <label for="mobileNumber">Mobile number *</label>
+          <input type="tel" id="mobileNumber" required pattern="[0-9]{7,15}" />
+        </div>
+        <div class="field">
+          <label for="department">Department *</label>
+          <input type="text" id="department" required />
+        </div>
+        <div class="field">
+          <label for="designation">Designation *</label>
+          <input type="text" id="designation" required />
+        </div>
+        <div class="field">
+          <label for="joiningDate">Joining date *</label>
+          <input type="date" id="joiningDate" required />
+        </div>
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender">
+            <option value="">-- Select --</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="address">Address</label>
+          <input type="text" id="address" />
+        </div>
+        <div class="field">
+          <label for="salary">Salary</label>
+          <input type="number" id="salary" min="0" step="0.01" />
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete confirmation modal -->
+<div class="modal-overlay" id="deleteOverlay">
+  <div class="modal" style="max-width:420px;">
+    <h3>Delete employee?</h3>
+    <p id="deleteMessage" style="color: var(--slate); font-size: 14px;"></p>
+    <p style="color: var(--slate-soft); font-size: 13px;">
+      This performs a soft delete — the record is hidden from the list but kept in the database.
+    </p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+      <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
