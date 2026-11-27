@@ -138,43 +138,43 @@ A ready-to-import Postman collection covering all six endpoints is provided at `
 
 The login screen validates mandatory fields, authenticates the user against the `Users` table (password compared via bcrypt, never stored or compared in plain text), and issues a JWT on success.
 
-![Login screen](../screenshots/01-login.png)
+![Login screen](screenshots/01-login.png)
 
 ### 6.2 Employee List (Read — All)
 
 After logging in, the user lands on the Employee List, which fetches and displays every **active** employee (`IsDeleted = 0`) via `GetAllEmployees`.
 
-![Employee list](../screenshots/02-employee-list.png)
+![Employee list](screenshots/02-employee-list.png)
 
 ### 6.3 Add Employee (Create)
 
 Clicking **"+ Add employee"** opens a form. All mandatory fields are validated both in the browser and again on the server before the record is inserted via `AddEmployee`.
 
-![Add employee form](../screenshots/03-add-employee.png)
+![Add employee form](screenshots/03-add-employee.png)
 
 ### 6.4 View Employee (Read — Single)
 
 Clicking **"View"** on any row calls `GetEmployeeById` and displays the employee's full details in a **read-only** screen — distinct from the editable form used for updates.
 
-![View employee details](../screenshots/04-view-employee.png)
+![View employee details](screenshots/04-view-employee.png)
 
 ### 6.5 Edit Employee (Update)
 
 Clicking **"Edit"** fetches the employee's current data via `GetEmployeeById`, pre-fills the form, and on save calls `UpdateEmployee` — which modifies the existing row in place and never inserts a new record.
 
-![Edit employee form](../screenshots/05-edit-employee.png)
+![Edit employee form](screenshots/05-edit-employee.png)
 
 ### 6.6 Delete Employee (Soft Delete)
 
 Clicking **"Delete"** prompts for confirmation before calling `DeleteEmployee`, which sets `IsDeleted = 1` on the record. The row is never physically removed from the database.
 
-![Delete confirmation](../screenshots/06-delete-confirmation.png)
+![Delete confirmation](screenshots/06-delete-confirmation.png)
 
 ### 6.7 Employee List After Delete
 
 Once confirmed, the deleted employee disappears from the Employee List — proving the application correctly filters out soft-deleted records from normal views, while the row itself still exists in the database.
 
-![Employee list after delete](../screenshots/07-employee-list-after-delete.png)
+![Employee list after delete](screenshots/07-employee-list-after-delete.png)
 
 ---
 
