@@ -59,11 +59,11 @@ async function apiRequest(path, { method = "GET", body, auth = true } = {}) {
   });
 
   // Token missing/expired/invalid -> send the user back to login.
-  if (response.status === 401) {
-    clearSession();
-    window.location.href = "index.html";
-    throw new Error("Session expired. Please log in again.");
-  }
+if (auth && response.status === 401) {
+  clearSession();
+  window.location.href = "index.html";
+  throw new Error("Session expired. Please log in again.");
+}
 
   const data = await response.json().catch(() => ({}));
 
