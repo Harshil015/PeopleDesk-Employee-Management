@@ -69,13 +69,13 @@ Every request to an Employee endpoint passes through `authMiddleware`, which rej
 **Project folder structure:**
 
 ```
-ems-app/
-├── backend/            # Express API, SQLite DB, auth, controllers, routes
-├── frontend/            # Login page, employee dashboard, styles, scripts
-├── database/            # SQL Server-equivalent schema script
-├── postman/             # Postman collection for API testing
-├── screenshots/          # Screenshots referenced in Section 6 below
-└── docs/README.md       # This report
+PeopleDesk-Employee-Management/
+├── backend/
+├── frontend/
+├── database/
+├── postman/
+├── screenshots/
+└── README.md            # Main project report
 ```
 
 ---
@@ -232,4 +232,4 @@ If `better-sqlite3` fails to install (a native module compiled during `npm insta
 | 6 | Postman Collection | `postman/EmployeeManagementSystem.postman_collection.json` |
 | 7 | Screenshots (Login, List, Add, Edit, View, Delete) | Section 6 of this report / `screenshots/` |
 | 8 | Project Setup and Execution Documentation | Section 8 of this report |
-| 9 | Git Repository Link | *(add your repository link here, if applicable)* |
+| 9 | Git Repository Link | (https://github.com/Harshil015/PeopleDesk-Employee-Management) |
