@@ -54,27 +54,85 @@ function renderTable(employees) {
     emptyState.style.display = "block";
     return;
   }
+
   emptyState.style.display = "none";
 
   for (const emp of employees) {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${emp.Id}</td>
-      <td>${escapeHtml(emp.EmployeeName)}</td>
-      <td>${escapeHtml(emp.Email)}</td>
-      <td>${escapeHtml(emp.MobileNumber)}</td>
-      <td>${escapeHtml(emp.Department)}</td>
-      <td>${escapeHtml(emp.Designation)}</td>
-      <td>${formatDate(emp.JoiningDate)}</td>
-      <td><span class="badge">Active</span></td>
-      <td class="row-actions">
-        <button class="btn btn-secondary btn-small" data-action="view" data-id="${emp.Id}">View</button>
-        <button class="btn btn-secondary btn-small" data-action="edit" data-id="${emp.Id}">Edit</button>
-        <button class="btn btn-danger btn-small" data-action="delete" data-id="${emp.Id}" data-name="${escapeHtml(emp.EmployeeName)}">Delete</button>
-      </td>
-    `;
+
+    const values = [
+      emp.Id,
+      emp.EmployeeName,
+      emp.Email,
+      emp.MobileNumber,
+      emp.Department,
+      emp.Designation,
+      formatDate(emp.JoiningDate)
+    ];
+
+    // Create employee data cells safely.
+    for (const value of values) {
+      const td = document.createElement("td");
+      td.textContent = value ?? "";
+      tr.appendChild(td);
+    }
+
+    // Status cell.
+    const statusCell = document.createElement("td");
+    const statusBadge = document.createElement("span");
+
+    statusBadge.className = "badge";
+    statusBadge.textContent = "Active";
+
+    statusCell.appendChild(statusBadge);
+    tr.appendChild(statusCell);
+
+    // Action buttons.
+    const actionsCell = document.createElement("td");
+    actionsCell.className = "row-actions";
+
+    actionsCell.appendChild(
+      createActionButton("View", "view", emp)
+    );
+
+    actionsCell.appendChild(
+      createActionButton("Edit", "edit", emp)
+    );
+
+    actionsCell.appendChild(
+      createActionButton("Delete", "delete", emp)
+    );
+
+    tr.appendChild(actionsCell);
     tableBody.appendChild(tr);
   }
+}
+
+
+// Safely create action buttons without injecting employee
+// values into HTML strings.
+function createActionButton(label, action, employee) {
+  const button = document.createElement("button");
+
+  button.type = "button";
+  button.textContent = label;
+  button.dataset.action = action;
+  button.dataset.id = String(employee.Id);
+
+  if (action === "view") {
+    button.className = "btn btn-secondary btn-small";
+  }
+
+  if (action === "edit") {
+    button.className = "btn btn-secondary btn-small";
+  }
+
+  if (action === "delete") {
+    button.className = "btn btn-danger btn-small";
+    button.dataset.name = employee.EmployeeName ?? "";
+  }
+
+  return button;
 }
 
 // Simple client-side search over name/department (the PDF lists

@@ -1,14 +1,3 @@
--- ============================================================
--- Employee Management System - Database Schema (SQLite)
--- Mirrors the "Users" and "Employees" tables defined in the
--- assignment PDF. Column names/purposes are identical; only the
--- data-type *keywords* differ slightly because SQLite has a
--- simpler type system than SQL Server (see database/ems_sqlserver_schema.sql
--- for the exact SQL Server version of this same schema).
--- ============================================================
-
--- Users table: holds login credentials.
--- Equivalent to the PDF's "Users" table.
 CREATE TABLE IF NOT EXISTS Users (
     Id            INTEGER PRIMARY KEY AUTOINCREMENT,  -- SQL Server: INT PRIMARY KEY IDENTITY
     Username      TEXT NOT NULL UNIQUE,               -- SQL Server: VARCHAR(100)
@@ -30,8 +19,10 @@ CREATE TABLE IF NOT EXISTS Employees (
     JoiningDate    TEXT NOT NULL,
     Address        TEXT,
     Gender         TEXT,
-    Salary         REAL,
-    IsDeleted      INTEGER NOT NULL DEFAULT 0,          -- 0 = Active, 1 = Deleted (Soft Delete flag)
+    Salary         REAL
+                   CHECK (Salary IS NULL OR Salary >= 0),
+    IsDeleted      INTEGER NOT NULL DEFAULT 0
+                   CHECK (IsDeleted IN (0, 1)),
     CreatedDate    TEXT NOT NULL DEFAULT (datetime('now')),
     ModifiedDate   TEXT
 );

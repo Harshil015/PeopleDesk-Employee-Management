@@ -1,37 +1,49 @@
-// js/api.js
-//
-// Every network call the frontend makes goes through this one
-// file. Centralizing it means: (1) the base URL lives in one
-// place, (2) the Authorization header is attached automatically,
-// and (3) a 401 response (expired/invalid token) automatically
-// bounces the user back to the login page - exactly like an
-// ASP.NET Core app redirecting to /Account/Login when a cookie
-// expires.
-
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = window.EMS_CONFIG?.apiBaseUrl || "http://localhost:5000/api";
 
 function getToken() {
-  return localStorage.getItem("ems_token");
+  return (
+    sessionStorage.getItem("ems_token") ||
+    localStorage.getItem("ems_token")
+  );
 }
 
-function setSession(token, user) {
-  localStorage.setItem("ems_token", token);
-  localStorage.setItem("ems_user", JSON.stringify(user));
+function setSession(token, user, rememberMe = false) {
+  clearSession();
+
+  const storage = rememberMe
+    ? localStorage
+    : sessionStorage;
+
+  storage.setItem("ems_token", token);
+  storage.setItem("ems_user", JSON.stringify(user));
 }
 
 function clearSession() {
   localStorage.removeItem("ems_token");
   localStorage.removeItem("ems_user");
+
+  sessionStorage.removeItem("ems_token");
+  sessionStorage.removeItem("ems_user");
 }
 
 function getCurrentUser() {
-  const raw = localStorage.getItem("ems_user");
-  return raw ? JSON.parse(raw) : null;
+  const raw =
+    sessionStorage.getItem("ems_user") ||
+    localStorage.getItem("ems_user");
+
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    clearSession();
+    return null;
+  }
 }
 
-// Core request helper. `auth` defaults to true because almost
-// every call in this app (everything except /auth/login) needs
-// the token attached.
+
 async function apiRequest(path, { method = "GET", body, auth = true } = {}) {
   const headers = { "Content-Type": "application/json" };
 
