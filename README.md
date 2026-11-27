@@ -176,12 +176,6 @@ Once confirmed, the deleted employee disappears from the Employee List — provi
 
 ![Employee list after delete](../screenshots/07-employee-list-after-delete.png)
 
-### 6.8 API Testing via Postman
-
-The full request/response cycle — Login followed by an authenticated `GetAllEmployees` call — tested directly against the running API using Postman.
-
-![Postman API test](../screenshots/08-postman-login-getall.png)
-
 ---
 
 ## 7. Key Design Decisions
