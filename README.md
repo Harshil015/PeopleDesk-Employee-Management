@@ -232,4 +232,4 @@ If `better-sqlite3` fails to install (a native module compiled during `npm insta
 | 6 | Postman Collection | `postman/EmployeeManagementSystem.postman_collection.json` |
 | 7 | Screenshots (Login, List, Add, Edit, View, Delete) | Section 6 of this report / `screenshots/` |
 | 8 | Project Setup and Execution Documentation | Section 8 of this report |
-| 9 | Git Repository Link | (https://github.com/Harshil015/PeopleDesk-Employee-Management) |
+| 9 | Git Repository Link | https://github.com/Harshil015/PeopleDesk-Employee-Management |
