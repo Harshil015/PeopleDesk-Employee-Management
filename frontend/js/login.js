@@ -1,10 +1,3 @@
-// js/login.js
-//
-// Handles the login form's submit event: validate fields on the
-// client (a first line of defense - the SERVER re-validates too,
-// since client-side checks can always be bypassed), call the API,
-// store the token, and redirect.
-
 const loginForm = document.getElementById("loginForm");
 const errorBox = document.getElementById("errorBox");
 const loginBtn = document.getElementById("loginBtn");
@@ -41,9 +34,10 @@ loginForm.addEventListener("submit", async (event) => {
   loginBtn.textContent = "Signing in...";
 
   try {
-    const result = await api.login(username, password);
-    setSession(result.token, result.user);
-    window.location.href = "employees.html";
+const result = await api.login(username, password);
+const rememberMe = document.getElementById("rememberMe").checked;
+setSession(result.token, result.user, rememberMe);
+window.location.href = "employees.html";
   } catch (err) {
     showError(err.message);
   } finally {
