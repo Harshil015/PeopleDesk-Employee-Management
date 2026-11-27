@@ -38,7 +38,7 @@ GO
 -- ---------- Sample seed data ----------
 
 INSERT INTO Users (Username, Email, PasswordHash, IsActive)
-VALUES ('admin', 'admin@example.com', '<bcrypt-hash-generated-by-seed-script>', 1);
+VALUES ('admin', 'admin@example.com', '$2a$10$iFvwb96duIgXu/LnBYukROjYbnWHOJHCg89MetEGqqMVnGdVmkLi2', 1);
 GO
 
 INSERT INTO Employees (EmployeeName, Email, MobileNumber, Department, Designation, JoiningDate, Gender, Salary)
